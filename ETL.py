@@ -15,8 +15,6 @@ CLICKHOUSE_DATABASE = config['clickhouse']['database']
 # Ruta a la carpeta que contiene los archivos JSON
 DATA_FOLDER = 'data'
 
-FIRST_JSON_FILE = 'data/mpd.slice.0-999.json' # Ruta al primer archivo JSON de playlists
-
 # Función para insertar datos en ClickHouse (formato VALUES formateado)
 def insert_data(client, table, columns, data):
     """Realiza una inserción de múltiples filas en ClickHouse utilizando la sintaxis INSERT INTO ... VALUES ...
@@ -97,7 +95,7 @@ if __name__ == '__main__':
             try:
                 # Cada JSON contiene un diccionario con una clave 'playlists' 
                 # cuyo valor es una lista de diccionarios (cada uno representa una playlist).
-                with open(FIRST_JSON_FILE, 'r') as f:
+                with open(file_path, 'r') as f:
                     data = json.load(f)# Carga el contenido del archivo JSON en la variable 'data' como un diccionario.
                     
                     # Itera sobre cada diccionario que representa una playlist dentro de la lista 'playlists' del diccionario 'data'.
@@ -140,10 +138,10 @@ if __name__ == '__main__':
                             tracks_by_playlist[playlist_id].append(tuple(track_info.values()))
                             
             except FileNotFoundError: 
-                print(f"Error: No se encontró el archivo JSON en la ruta: {FIRST_JSON_FILE}")
+                print(f"Error: No se encontró el archivo JSON en la ruta: {file_path}")
                 exit(1) 
             except json.JSONDecodeError:
-                print(f"Error: No se pudo decodificar el JSON del archivo: {FIRST_JSON_FILE}. Asegúrese de que el formato sea válido.")
+                print(f"Error: No se pudo decodificar el JSON del archivo: {file_path}. Asegúrese de que el formato sea válido.")
                 exit(1) 
 
             # Insertar los datos de playlists en la tabla 'playlists' de ClickHouse
