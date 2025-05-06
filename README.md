@@ -58,3 +58,6 @@ Una vez que ClickHouse esté en ejecución, puedes crear la base de datos utiliz
 4.  A continuación, crea las tablas `playlists` y `tracks` ejecutando las sentencias DDL que se encuentran en el archivo DDL.sql.
     Para hacerlo, copia las sentencias del archivo y ejecutalas en el cliente de ClickHouse. 
 
+## Diccionario de Datos
+
+El diccionario de datos que describe la estructura de las tablas `playlists` y `tracks` se encuentra en el siguiente archivo: [data_dictionary.md](data_dictionary.md).
